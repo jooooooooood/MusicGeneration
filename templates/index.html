@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Homepage</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+    </head>
+<body>
+    <h1>Welcome</h1>
+    <ul>
+        {% for track in track_info %}
+            <li>{{ track.index }}. {{ track.artist }} - {{ track.name }} : {{track.genres}}</li>
+        {% endfor %}
+    </ul>
+    <p>Your Top Genres Are:</p>
+    <ul>
+        {% for genre in topGenres %}
+        <li>{{ loop.index }}. {{ genre }}</li>
+        {% endfor %}
+    </ul>
+
+    <button id="generate-button">Generate Audio</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+$('#generate-button').click(function() {
+    window.location.href = '/generate_audio';
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loading Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+</head>
+<body>
+    <h1>Loading</h1>
+    
+    <div id="loading-screen">
+        <div id="loading-spinner"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function() {
+        checkStatus('{{ task_id }}');  // Call the checkStatus function with the task ID
+    });
+
+    function checkStatus(task_id) {
+        $.get('/check_status/' + task_id, function(response) {
+            if (response.status === 'done') {
+                $('#loading-screen').hide();
+                $('#loading-spinner').hide();
+                // Show the audio file
+                var audioPlayer = '<audio controls><source src="/static/audio/test_0.wav" type="audio/wav"></audio>';
+                $('body').append(audioPlayer);
+            } else {
+                // Check the status again after a delay
+                setTimeout(function() {
+                    checkStatus(task_id);
+                }, 1000);
+            }
+        });
+    }
+    </script>
+</body>
+</html>
