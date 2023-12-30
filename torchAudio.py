@@ -1,33 +1,30 @@
 import json
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
+import torch
 
-def generate_audio():
+
+def generate_audio(genres):
     # Set the path to the directory containing the ffmpeg executable
     ffmpeg_path = r'C:\Users\mclar\Downloads\ffmpeg\ffmpeg\bin\ffmpeg.exe'
 
     model = MusicGen.get_pretrained("facebook/musicgen-medium", device='cuda')
-    model.set_generation_params(duration=30)
-
-
-# In your generate_audio function:
-    with open('top_genres.json', 'r') as f:
-        descriptions = json.load(f)
-
-    print(descriptions)
+    model.set_generation_params(duration=2)
 
     print_gpu_usage()
 
-    print(["A " + descriptions[0] + " song with " + descriptions[1] + " and " + descriptions[2] + " influence"])
+    print(genres)
+    print("A song with influences that includes " + ', '.join(genres))
+    
+    description = "A song with influences that includes " + ', '.join(genres)
 
-    wav = model.generate(["A " + descriptions[0] + " song with " + descriptions[1] + " and " + descriptions[2] + " influence"])
+    wav = model.generate([description])
 
     for idx, one_wav in enumerate(wav):
         song = audio_write(f'static/audio/test_{idx}', one_wav.cpu(), model.sample_rate, strategy="loudness")
     
     return song
 
-import torch
 
 def print_gpu_usage():
     if torch.cuda.is_available():

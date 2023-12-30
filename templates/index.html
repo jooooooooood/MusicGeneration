@@ -4,13 +4,29 @@
         <title>Homepage</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
     </head>
-<body>
-    <h1>Welcome</h1>
-    <ul>
-        {% for track in track_info %}
-            <li>{{ track.index }}. {{ track.artist }} - {{ track.name }} : {{track.genres}}</li>
+    <body>
+        <h1>Welcome</h1>
+        <h2 id="counter">0/5 artists picked</h2>
+
+        <button id="generate-button">Generate Audio</button>
+
+        <button id="sign-in-button">Sign In </button>
+        <button id="sign-out-button">Sign Out </button>
+
+
+        <div class="grid">
+            {% for track in track_info %}
+            <div class="grid-item" id="{{ track.genres }}">
+                <div class="artist-card">
+                    <img src="{{ track.image }}" alt="{{ track.artist }}" class="artist-image">
+                    <div class="artist-info">
+                        <p>{{ track.index }}. {{ track.name }}: {{track.genres[0]}}</p>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+        </div>
+
     <p>Your Top Genres Are:</p>
     <ul>
         {% for genre in topGenres %}
@@ -18,15 +34,9 @@
         {% endfor %}
     </ul>
 
-    <button id="generate-button">Generate Audio</button>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
 
-$('#generate-button').click(function() {
-    window.location.href = '/generate_audio';
-});
-
-    </script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='scripts/main.js') }}"></script></body>
 </html>
