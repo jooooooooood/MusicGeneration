@@ -1,12 +1,11 @@
 # MusicGeneration
 
-This project requires Python 3.9
+This project requires [Pyton 3.9](https://www.python.org/downloads/release/python-390/)
 
-If you do not have Python 3.9, download it from the [python website](https://www.python.org/downloads/release/python-390/)
+When you first clone the repo, create a virtual environment in the project by running  **python -m venv env**
+To activate the env you can then run **.\env\Scripts\activate** in the terminal
 
-
-Create a virtual environment and download all the necessary modules in the requirements.txt file by running
-
+To install all the necessary modules you can then run
 **pip install -r requirements.txt**
 
 If you have a CUDA-capabale machine you can pip download PyTorch from here https://pytorch.org/get-started/locally/
